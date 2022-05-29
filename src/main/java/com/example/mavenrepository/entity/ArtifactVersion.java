@@ -12,7 +12,7 @@ public class ArtifactVersion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long uid;
     @ManyToOne
     private Artifact artifact;
     @Column
@@ -26,8 +26,8 @@ public class ArtifactVersion {
         this.version = version;
     }
 
-    public Long getId() {
-        return id;
+    public Long getUid() {
+        return uid;
     }
 
     public Artifact getArtifact() {

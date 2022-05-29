@@ -9,37 +9,39 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/group")
+@RequestMapping("/api/v1/group")
 public class GroupController {
 
     private final GroupRepository groupRepository;
 
     @Autowired
-    public GroupController(GroupRepository groupRepository){
+    public GroupController(GroupRepository groupRepository) {
         this.groupRepository = groupRepository;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Group> get(@PathVariable Long id) {
+    public ResponseEntity<Group> get(@PathVariable String id) {
         return ResponseEntity.of(groupRepository.findById(id));
     }
 
+
     @PostMapping("/")
-    public Group post(Group group) {
+    public Group post(@RequestBody Group group) {
         return groupRepository.save(group);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable String id) {
         groupRepository.deleteById(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Group> put(@PathVariable Long id, Group group) {
+    public ResponseEntity<Group> put(@PathVariable String id,@RequestBody Group group) {
         return ResponseEntity.of(groupRepository.findById(id).map(g -> {
             g.setName(group.getName());
             return groupRepository.save(g);
